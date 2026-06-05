@@ -144,9 +144,9 @@ public class JunorCommands {
 
                     "\nCommands:\n" +
                     "help - list all comands\n" +
-                    "strVar(name=\"variable_name\", value=[\"variable_value_text\"]) - creates a variable type: string\n" +
-                    "intVar(name=\"variable_name\", value=[variable_value_int]) - creates a variable type: int\n" +
-                    "boolVar(name=\"variable_name\", value=[variable_value_false_and_true]) - creates a variable type: boolean\n" +
+                    "strVar(name=(\"variable_name\"), value=(\"variable_value_text\")) - creates a variable type: string\n" +
+                    "intVar(name=(\"variable_name\"), value=(variable_value_int)) - creates a variable type: int\n" +
+                    "boolVar(name=(\"variable_name\"), value=(variable_value_false_and_true)) - creates a variable type: boolean\n" +
                     "show(\"text\") - prints the text between parentheses\n" +
                     "run([\"archive_cjunor_location\"]) - run a CJunor archive\n" +
                     "input(type=(int|str), target=\"var_name\", msg=\"text\") - requests a user input via keyboard\n" +
@@ -158,7 +158,14 @@ public class JunorCommands {
                     "func(name=(\"func_name\"), body={cmd|cmd}) - defines a reusable block of commands\n" +
                     "call(name=(\"func_name\")) - executes a defined function\n" +
                     "exit - exit of interpreter" +
+                    "/# - commentary\n\n" +
 
+                    "Others:\n" +
+                    "{} - command execution\n" +
+                    "<> - condition in condition\n" +
+                    "[] - archive location\n" +
+                    "() - value\n" +
+                    "| - add more comands in line, ex: show(\"hello, world\") | show(\"hello!\")" +
                     ANSIColors.ANSI_RESET +
                     "\n");
             return;
