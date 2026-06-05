@@ -67,7 +67,7 @@ public class LoopsManagement {
             }
 
             try { Thread.sleep(1); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-        }
+        }//
     }
 
     private static boolean checkCondition(String esq, String op, String dir, Map<String, Integer> intVars) {

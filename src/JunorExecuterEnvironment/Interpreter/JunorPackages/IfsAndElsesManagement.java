@@ -72,7 +72,7 @@ public class IfsAndElsesManagement {
             default: return false;
         }
     }
-
+//
     private static int resolveValue(String token, Map<String, Integer> intVars) {
         String cleanToken = token.trim();
 

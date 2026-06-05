@@ -15,7 +15,7 @@ public class IntegerManagement {
         int num1 = extractValue(groupCalc.group(2).trim(), intVars);
         int num2 = extractValue(groupCalc.group(4).trim(), intVars);
         String operator = groupCalc.group(3).trim();
-
+//
         if (operator.equals("+")) {
             finalText = num1 + num2;
         }

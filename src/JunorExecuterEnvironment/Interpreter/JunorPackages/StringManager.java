@@ -28,7 +28,7 @@ public class StringManager {
     }
     public static void Inputer(Matcher inputerGroup,Map<String, String> strVars, Map<String, Integer> intVars) {
         String textoBruto = inputerGroup.group(3);
-
+//
         String textoFinal = varPattern.matcher(textoBruto).replaceAll(matchResult -> {
             String nomeVar = matchResult.group(1);
 
