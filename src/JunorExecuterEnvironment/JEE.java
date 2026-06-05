@@ -32,7 +32,7 @@ public class JEE {
             System.out.println("Junor terminal Started");
             System.out.println("Type \"exit\" to terminate the process or type \"help\" for commands.\n");
 
-//
+
             while (true) {
                 System.out.print(ANSIColors.ANSI_BLUE + ">> " + ANSIColors.ANSI_RESET);
                 String command = scanner.nextLine().trim();

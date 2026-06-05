@@ -177,4 +177,4 @@ public class JunorCommands {
         strVars.clear();
         boolVars.clear();
     }
-}//
+}

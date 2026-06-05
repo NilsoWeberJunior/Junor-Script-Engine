@@ -137,7 +137,7 @@ public class JFEE {
                         "[author=\"" + author + "\"]",
                         "<header}"
                 );
-//
+
                 Files.write(manifestPathInZip, manifestContent, java.nio.charset.StandardCharsets.UTF_8);
                 System.out.println(ANSIColors.ANSI_GREEN + "[Junor Compiler] manifest.jmtdt generated successfully." + ANSIColors.ANSI_RESET);
 
