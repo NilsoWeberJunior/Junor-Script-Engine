@@ -45,3 +45,11 @@ call(name=(\"func_name\")) - chama uma função
 exit - (no modo interativo) sai do modo interativo para o terminal normal
 
 help - lista os comandos disponíveis da Junor
+
+## Funções
+
+JEE (Junor Executer Environment) - ele é quem inicia tudo, se um arquivo .CJunor for associado a o executável (em releases, o exe 64 bits X64) ele automaticamente começa a executar o junor script pelo JFEE
+
+JFEE (Junor Files Executer Enivironment) - ele é responsável por ler e executar as ações de um arquivo .CJunor (iniciado pelo comando run ou se um arquivo .CJunor for aberto com o exe)
+
+Junor Commands - ele é o responsável pela interpretação e execução dos comandos
