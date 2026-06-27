@@ -1,13 +1,13 @@
 package JunorExecuterEnvironment;
 
+import JunorExecuterEnvironment.Interpreter.ANSIColors;
+import JunorExecuterEnvironment.Interpreter.JunorCommands;
+
 import java.net.URI;
 import java.nio.file.*;
 import java.util.HashMap;
 
-import JunorExecuterEnvironment.Interpreter.ANSIColors;
-import JunorExecuterEnvironment.Interpreter.JunorCommands;
-
-public class JFEE {
+public class JAFEE {
     private static Path Manifest = null;
     private static Path ScriptToHead = null;
     private static boolean InHeader = false;
@@ -28,18 +28,18 @@ public class JFEE {
 
         try {
 
-            Path CJunorLocation = Paths.get(archiveToOpenURI).toAbsolutePath();
+            Path CJunorAppLocation = Paths.get(archiveToOpenURI).toAbsolutePath();
 
-            URI CJunorUri = URI.create("jar:" + CJunorLocation.toUri().toString());
+            URI CJunorAppUri = URI.create("jar:" + CJunorAppLocation.toUri().toString());
 
 
-            try (FileSystem CJunorFile = FileSystems.newFileSystem(CJunorUri, new HashMap<>())) {
-                Manifest = CJunorFile.getPath("/manifest.jmtdt");
+            try (FileSystem CJunorAppFile = FileSystems.newFileSystem(CJunorAppUri, new HashMap<>())) {
+                Manifest = CJunorAppFile.getPath("/manifest.jmtdt");
                 if (!Files.exists(Manifest)) {
                     System.out.println(ANSIColors.ANSI_RED + "[Junor Error] Critical Error! manifest not found." + ANSIColors.ANSI_RESET);
                     return;
                 }
-                ScriptToHead = CJunorFile.getPath("/main.junor");
+                ScriptToHead = CJunorAppFile.getPath("/main.junor");
                 if (!Files.exists(ScriptToHead)) {
                     System.out.println(ANSIColors.ANSI_RED + "[Junor Error] Critical error! main.junor not found" + ANSIColors.ANSI_RESET);
                     return;
@@ -113,23 +113,23 @@ public class JFEE {
 
     }
 
-    public static void CreateArchiveCJunor(URI targetCJunorURI, Path originalScriptPath, String author) {
+    public static void CreateArchiveCJunorApp(URI targetCJunorAppURI, Path originalScriptPath, String author) {
         System.out.println(ANSIColors.ANSI_BLUE + "[Junor Compiler] Starting compilation process..." + ANSIColors.ANSI_RESET);
 
-        java.util.Map<String, String> env = new java.util.HashMap<>();
+        java.util.Map<String, String> env = new HashMap<>();
         env.put("create", "true");
 
-        java.net.URI CJunorUri = java.net.URI.create("jar:" + targetCJunorURI.toString());
+        URI CJunorAppUri = URI.create("jar:" + targetCJunorAppURI.toString());
 
         try {
-            Path targetPath = Paths.get(targetCJunorURI);
+            Path targetPath = Paths.get(targetCJunorAppURI);
             if (Files.exists(targetPath)) {
                 Files.delete(targetPath);
             }
 
-            try (FileSystem newCJunorFile = FileSystems.newFileSystem(CJunorUri, env)) {
+            try (FileSystem newCJunorAppFile = FileSystems.newFileSystem(CJunorAppUri, env)) {
 
-                Path manifestPathInZip = newCJunorFile.getPath("/manifest.jmtdt");
+                Path manifestPathInZip = newCJunorAppFile.getPath("/manifest.jmtdt");
 
                 java.util.List<String> manifestContent = java.util.Arrays.asList(
                         "{header>",
@@ -141,22 +141,22 @@ public class JFEE {
                 Files.write(manifestPathInZip, manifestContent, java.nio.charset.StandardCharsets.UTF_8);
                 System.out.println(ANSIColors.ANSI_GREEN + "[Junor Compiler] manifest.jmtdt generated successfully." + ANSIColors.ANSI_RESET);
 
-                Path scriptPathInZip = newCJunorFile.getPath("/main.junor");
+                Path scriptPathInZip = newCJunorAppFile.getPath("/main.junor");
 
                 if (!Files.exists(originalScriptPath)) {
                     System.out.println(ANSIColors.ANSI_RED + "[Junor Compiler Error] Source script 'main.junor' not found at target path!" + ANSIColors.ANSI_RESET);
                     return;
                 }
 
-                Files.copy(originalScriptPath, scriptPathInZip, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(originalScriptPath, scriptPathInZip, StandardCopyOption.REPLACE_EXISTING);
                 System.out.println(ANSIColors.ANSI_GREEN + "[Junor Compiler] main.junor successfully packaged." + ANSIColors.ANSI_RESET);
 
             }
 
-            System.out.println(ANSIColors.ANSI_GREEN + "\n[Junor Compiler] Package compiled successfully target: " + targetPath.getFileName() + ANSIColors.ANSI_RESET);
+            System.out.println(ANSIColors.ANSI_GREEN + "\n[Junor Compiler] App compiled successfully target: " + targetPath.getFileName() + ANSIColors.ANSI_RESET);
 
         } catch (Exception e) {
-            System.out.println(ANSIColors.ANSI_RED + "[Junor Compiler Error] Failed to pack archive: " + e.getMessage() + ANSIColors.ANSI_RESET);
+            System.out.println(ANSIColors.ANSI_RED + "[Junor Compiler Error] Failed to pack app archive: " + e.getMessage() + ANSIColors.ANSI_RESET);
         }
     }
 }

@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 public class LoopsManagement {
-    public static void executeFor(Matcher forMatcher, Map<String, Integer> intVars) {
+
+    public static void executeFor(Matcher forMatcher, Map<String, Integer> intVars, String loopBlock) {
         String nameVar = forMatcher.group(1);
 
         String bruteStart = forMatcher.group(2).trim();
         String bruteEnd = forMatcher.group(3).trim();
-        String commandBlocks = forMatcher.group(4);
 
         int start = resolveCalc(bruteStart, intVars);
         int end = resolveCalc(bruteEnd, intVars);
@@ -18,21 +18,16 @@ public class LoopsManagement {
         if (start <= end) {
             for (int i = start; i <= end; i++) {
                 intVars.put(nameVar, i);
+                executeCommandBlockSeguro(loopBlock);
+                try { Thread.sleep(1); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
 
-                String[] commands = commandBlocks.split("\\|");
-                for (String cmd : commands) {
-                    JunorCommands.Interpret(cmd.trim());
-                }
             }
         }
         else {
             for (int i = start; i >= end; i--) {
                 intVars.put(nameVar, i);
-
-                String[] commands = commandBlocks.split("\\|");
-                for (String cmd : commands) {
-                    JunorCommands.Interpret(cmd.trim());
-                }
+                executeCommandBlockSeguro(loopBlock);
+                try { Thread.sleep(1); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
             }
         }
     }
@@ -52,21 +47,37 @@ public class LoopsManagement {
         }
     }
 
-    public static void executeWhile(Matcher whileMatcher, Map<String, Integer> intVars) {
+    public static void executeWhile(Matcher whileMatcher, Map<String, Integer> intVars, String blocoLoop) {
         String bruteLeftSide = whileMatcher.group(1);
         String operator = whileMatcher.group(2);
         String bruteRightSide = whileMatcher.group(3);
-        String commandBlock = whileMatcher.group(4);
-
 
         while (checkCondition(bruteLeftSide, operator, bruteRightSide, intVars)) {
-
-            String[] commands = commandBlock.split("\\|");
-            for (String cmd : commands) {
-                JunorCommands.Interpret(cmd.trim());
-            }
+            executeCommandBlockSeguro(blocoLoop);
 
             try { Thread.sleep(1); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        }
+    }
+
+    private static void executeCommandBlockSeguro(String bruteBlock) {
+        int nivelChaves = 0;
+        StringBuilder comandoAtual = new StringBuilder();
+
+        for (int i = 0; i < bruteBlock.length(); i++) {
+            char c = bruteBlock.charAt(i);
+
+            if (c == '{') nivelChaves++;
+            else if (c == '}') nivelChaves--;
+
+            if (c == '|' && nivelChaves == 0) {
+                JunorCommands.Interpret(comandoAtual.toString().trim());
+                comandoAtual.setLength(0);
+            } else {
+                comandoAtual.append(c);
+            }
+        }
+        if (comandoAtual.length() > 0) {
+            JunorCommands.Interpret(comandoAtual.toString().trim());
         }
     }
 

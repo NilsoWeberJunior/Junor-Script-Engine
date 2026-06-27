@@ -17,25 +17,26 @@ public class StringManager {
         String textoFinal = varPattern.matcher(textoBruto).replaceAll(matchResult -> {
             String nomeVar = matchResult.group(1);
 
-            if (strVars.containsKey(nomeVar)) return strVars.get(nomeVar);
-            if (intVars.containsKey(nomeVar)) return String.valueOf(intVars.get(nomeVar));
-            if (boolVars.containsKey(nomeVar)) return boolVars.get(nomeVar);
+            if (strVars.containsKey(nomeVar)) return Matcher.quoteReplacement(strVars.get(nomeVar));
+            if (intVars.containsKey(nomeVar)) return Matcher.quoteReplacement(String.valueOf(intVars.get(nomeVar)));
+            if (boolVars.containsKey(nomeVar)) return Matcher.quoteReplacement(boolVars.get(nomeVar));
 
-            return matchResult.group(0);
+            return Matcher.quoteReplacement(matchResult.group(0));
         });
 
         System.out.println(textoFinal);
     }
-    public static void Inputer(Matcher inputerGroup,Map<String, String> strVars, Map<String, Integer> intVars) {
+
+    public static void Inputer(Matcher inputerGroup, Map<String, String> strVars, Map<String, Integer> intVars) {
         String textoBruto = inputerGroup.group(3);
 
         String textoFinal = varPattern.matcher(textoBruto).replaceAll(matchResult -> {
             String nomeVar = matchResult.group(1);
 
-            if (strVars.containsKey(nomeVar)) return strVars.get(nomeVar);
-            if (intVars.containsKey(nomeVar)) return String.valueOf(intVars.get(nomeVar));
+            if (strVars.containsKey(nomeVar)) return Matcher.quoteReplacement(strVars.get(nomeVar));
+            if (intVars.containsKey(nomeVar)) return Matcher.quoteReplacement(String.valueOf(intVars.get(nomeVar)));
 
-            return matchResult.group(0);
+            return Matcher.quoteReplacement(matchResult.group(0));
         });
 
         Scanner scanner = new Scanner(System.in);
